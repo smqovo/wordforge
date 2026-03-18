@@ -1,0 +1,75 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id        String   @id @default(cuid())
+  email     String   @unique
+  password  String   // bcrypt hashed
+  createdAt DateTime @default(now())
+  days      Day[]
+  vocabBook VocabBookEntry[]
+}
+
+model Day {
+  id         String      @id @default(cuid())
+  userId     String
+  user       User        @relation(fields: [userId], references: [id])
+  dayNumber  Int         // 1, 2, 3...
+  theme      String      // "自然地理", "教育" etc.
+  learnedAt  DateTime?   // 用户标记为已学习的日期，用于计算复习时间
+  words      Word[]
+  reviewLogs ReviewLog[]
+  createdAt  DateTime    @default(now())
+
+  @@unique([userId, dayNumber])
+}
+
+model Word {
+  id           String   @id @default(cuid())
+  dayId        String
+  day          Day      @relation(fields: [dayId], references: [id], onDelete: Cascade)
+  word         String   // 英文单词
+  phonetic     String?  // IPA 音标（系统自动补充）
+  partOfSpeech String?  // "n." "v." "adj." 等
+  definition   String   // 中文释义
+  etymology    String?  // 【拆】词根拆解
+  associations String?  // 【记】派生词/近义词/助记
+  collocations String?  // 【搭】词组搭配，用 ; 分隔多个
+  supplements  String?  // 【补】补充知识点
+  rawContent   String?  // 无法完全解析时保留原文
+  isCommonWord Boolean  @default(false) // 熟词僻义标记
+  orderIndex   Int      // 在当天笔记中的排列顺序
+  createdAt    DateTime @default(now())
+}
+
+model ReviewLog {
+  id         String   @id @default(cuid())
+  dayId      String
+  day        Day      @relation(fields: [dayId], references: [id])
+  userId     String
+  round      Int      // 1-6，对应艾宾浩斯的6轮
+  reviewDate DateTime // 实际复习日期
+  cardStats  Json     // { mastered: ["wordId1"...], needWork: ["wordId2"...] }
+  quizScore  Json?    // { cloze: {score: 8, total: 12}, reading: {score: 4, total: 6} }
+  duration   Int?     // 用时（秒）
+  createdAt  DateTime @default(now())
+}
+
+model VocabBookEntry {
+  id            String    @id @default(cuid())
+  userId        String
+  user          User      @relation(fields: [userId], references: [id])
+  word          String
+  definition    String?
+  color         String    @default("yellow") // yellow/red/green/blue
+  source        String?   // "Day 1 测验" 标记来源
+  addedToReview Boolean   @default(false)
+  learnedAt     DateTime? // 加入复习的日期
+  createdAt     DateTime  @default(now())
+}
