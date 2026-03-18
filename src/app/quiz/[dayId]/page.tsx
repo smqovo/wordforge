@@ -6,6 +6,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { TextHighlighter } from "@/components/TextHighlighter";
 
 interface ClozeBlank {
   number: number;
@@ -91,6 +92,16 @@ export default function QuizPage() {
     setGenerating(null);
   };
 
+  const handleAddToVocab = async (word: string, color: string, source: string) => {
+    try {
+      await fetch("/api/vocab", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ word, color, source }),
+      });
+    } catch {}
+  };
+
   const submitCloze = async () => {
     setClozeSubmitted(true);
     if (!clozeQuiz) return;
@@ -174,9 +185,14 @@ export default function QuizPage() {
               {/* Passage */}
               <Card>
                 <CardContent className="p-6">
-                  <p className="leading-relaxed whitespace-pre-wrap">
-                    {clozeQuiz.passage}
-                  </p>
+                  <TextHighlighter
+                    dayNumber={dayInfo?.dayNumber}
+                    onAddToVocab={handleAddToVocab}
+                  >
+                    <p className="leading-relaxed whitespace-pre-wrap">
+                      {clozeQuiz.passage}
+                    </p>
+                  </TextHighlighter>
                 </CardContent>
               </Card>
 
@@ -304,9 +320,14 @@ export default function QuizPage() {
               {/* Passage */}
               <Card>
                 <CardContent className="p-6">
-                  <p className="leading-relaxed whitespace-pre-wrap">
-                    {readingQuiz.passage}
-                  </p>
+                  <TextHighlighter
+                    dayNumber={dayInfo?.dayNumber}
+                    onAddToVocab={handleAddToVocab}
+                  >
+                    <p className="leading-relaxed whitespace-pre-wrap">
+                      {readingQuiz.passage}
+                    </p>
+                  </TextHighlighter>
                 </CardContent>
               </Card>
 
