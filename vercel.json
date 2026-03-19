@@ -1,9 +1,4 @@
 {
   "framework": "nextjs",
-  "buildCommand": "npx prisma generate && next build",
-  "env": {
-    "DATABASE_URL": "@database-url",
-    "NEXTAUTH_SECRET": "@nextauth-secret",
-    "DEEPSEEK_API_KEY": "@deepseek-api-key"
-  }
+  "buildCommand": "npx prisma generate && next build"
 }
