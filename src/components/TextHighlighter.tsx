@@ -88,11 +88,6 @@ export function TextHighlighter({
       }
     }
 
-    setHighlights((prev) => [
-      ...prev.filter((h) => h.word !== toolbar.word),
-      { word: toolbar.word, color, addToVocab },
-    ]);
-
     if (addToVocab && onAddToVocab) {
       const source = dayNumber ? `Day ${dayNumber} 测验` : "测验";
       onAddToVocab(toolbar.word, color, source);

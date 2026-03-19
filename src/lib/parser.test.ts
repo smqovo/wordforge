@@ -216,11 +216,12 @@ describe("parseMarkdown", () => {
       const result = parseMarkdown(
         "## day 1（测试）\n#### plain n.平原 adj.简朴的，明白的\n"
       );
-      const _word = result[0].words[0];
+      const word = result[0].words[0];
       // plain's common meanings are 简单的, 朴素的, 明白的
       // "平原" is uncommon → but definition also has 简朴的 and 明白的, so common meanings match
       // Actually the definition includes 明白的 which IS a common meaning, so it won't be flagged
       // This is expected behavior — we flag only when NO common meanings match
+      expect(word.isCommonWord).toBe(false);
     });
 
     it("should flag 'current' with '水流' as 熟词僻义", () => {

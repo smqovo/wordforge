@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect, useCallback, useRef } from "react";
+import { useState, useEffect, useCallback, useRef, Suspense } from "react";
 import { useSearchParams } from "next/navigation";
 import { DaySidebar } from "@/components/DaySidebar";
 import { WordCard } from "@/components/WordCard";
@@ -40,6 +40,14 @@ interface DayDetail {
 }
 
 export default function NotesPage() {
+  return (
+    <Suspense fallback={<div className="flex justify-center items-center min-h-screen">加载中...</div>}>
+      <NotesPageContent />
+    </Suspense>
+  );
+}
+
+function NotesPageContent() {
   const searchParams = useSearchParams();
   const fileInputRef = useRef<HTMLInputElement>(null);
 
@@ -158,7 +166,7 @@ export default function NotesPage() {
       } else {
         setUploadMessage(data.error || "上传失败");
       }
-    } catch (_error) {
+    } catch {
       setUploadMessage("上传失败，请检查网络");
     }
 
