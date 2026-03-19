@@ -1,5 +1,5 @@
 import { describe, it, expect } from "vitest";
-import { parseMarkdown, ParsedDay, ParsedWord } from "./parser";
+import { parseMarkdown, ParsedDay } from "./parser";
 import { readFileSync } from "fs";
 import { join } from "path";
 
@@ -216,7 +216,7 @@ describe("parseMarkdown", () => {
       const result = parseMarkdown(
         "## day 1（测试）\n#### plain n.平原 adj.简朴的，明白的\n"
       );
-      const word = result[0].words[0];
+      const _word = result[0].words[0];
       // plain's common meanings are 简单的, 朴素的, 明白的
       // "平原" is uncommon → but definition also has 简朴的 and 明白的, so common meanings match
       // Actually the definition includes 明白的 which IS a common meaning, so it won't be flagged

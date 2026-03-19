@@ -31,7 +31,6 @@ export function parseMarkdown(content: string): ParsedDay[] {
   let currentWord: ParsedWord | null = null;
   let currentRawLines: string[] = [];
   let currentTag: string | null = null; // tracks multi-line tag content
-  let orderIndex = 0;
 
   function finalizeWord() {
     if (currentWord && currentDay) {
@@ -73,7 +72,6 @@ export function parseMarkdown(content: string): ParsedDay[] {
         words: [],
       };
       days.push(currentDay);
-      orderIndex = 0;
       continue;
     }
 
@@ -100,7 +98,6 @@ export function parseMarkdown(content: string): ParsedDay[] {
         isCommonWord: false,
         rawContent: "",
       };
-      orderIndex++;
       continue;
     }
 

@@ -2,12 +2,6 @@
 
 import { useState, useCallback, useRef, useEffect } from "react";
 
-interface HighlightedWord {
-  word: string;
-  color: string;
-  addToVocab: boolean;
-}
-
 interface TextHighlighterProps {
   children: React.ReactNode;
   dayNumber?: number;
@@ -34,7 +28,6 @@ export function TextHighlighter({
 }: TextHighlighterProps) {
   const containerRef = useRef<HTMLDivElement>(null);
   const [toolbar, setToolbar] = useState<ToolbarPosition | null>(null);
-  const [highlights, setHighlights] = useState<HighlightedWord[]>([]);
   const [addToVocab, setAddToVocab] = useState(false);
 
   const handleTextSelection = useCallback(() => {

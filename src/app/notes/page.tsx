@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect, useCallback, useRef } from "react";
-import { useSearchParams, useRouter } from "next/navigation";
+import { useSearchParams } from "next/navigation";
 import { DaySidebar } from "@/components/DaySidebar";
 import { WordCard } from "@/components/WordCard";
 import { SearchBar } from "@/components/SearchBar";
@@ -40,7 +40,6 @@ interface DayDetail {
 }
 
 export default function NotesPage() {
-  const router = useRouter();
   const searchParams = useSearchParams();
   const fileInputRef = useRef<HTMLInputElement>(null);
 
@@ -159,7 +158,7 @@ export default function NotesPage() {
       } else {
         setUploadMessage(data.error || "上传失败");
       }
-    } catch (error) {
+    } catch (_error) {
       setUploadMessage("上传失败，请检查网络");
     }
 

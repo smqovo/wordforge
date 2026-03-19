@@ -27,7 +27,6 @@ export function WordCard({
   supplements,
   isCommonWord,
   dayNumber,
-  theme,
 }: WordCardProps) {
   return (
     <div className="bg-white rounded-xl border shadow-sm hover:shadow-md transition-shadow p-5">
