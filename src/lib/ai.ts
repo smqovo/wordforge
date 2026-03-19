@@ -1,5 +1,6 @@
 /**
- * Claude API integration for generating IELTS quizzes.
+ * DeepSeek API integration for generating IELTS quizzes.
+ * Uses OpenAI-compatible API format.
  */
 
 interface WordData {
@@ -97,26 +98,25 @@ export async function generateQuiz(
       ? buildClozePrompt(words, theme)
       : buildReadingPrompt(words, theme);
 
-  const response = await fetch("https://api.anthropic.com/v1/messages", {
+  const response = await fetch("https://api.deepseek.com/chat/completions", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
-      "x-api-key": process.env.CLAUDE_API_KEY!,
-      "anthropic-version": "2023-06-01",
+      "Authorization": `Bearer ${process.env.DEEPSEEK_API_KEY}`,
     },
     body: JSON.stringify({
-      model: "claude-sonnet-4-20250514",
+      model: "deepseek-chat",
       max_tokens: 4000,
       messages: [{ role: "user", content: prompt }],
     }),
   });
 
   if (!response.ok) {
-    throw new Error(`Claude API error: ${response.status} ${response.statusText}`);
+    throw new Error(`DeepSeek API error: ${response.status} ${response.statusText}`);
   }
 
   const data = await response.json();
-  const text = data.content[0].text;
+  const text = data.choices[0].message.content;
 
   // Clean JSON (remove possible markdown code block wrappers)
   const cleaned = text

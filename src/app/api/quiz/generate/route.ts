@@ -21,7 +21,7 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ error: "未找到该天数据" }, { status: 404 });
     }
 
-    if (!process.env.CLAUDE_API_KEY) {
+    if (!process.env.DEEPSEEK_API_KEY) {
       return NextResponse.json(
         { error: "请先在设置中配置 AI API Key" },
         { status: 400 }

@@ -41,15 +41,15 @@ export default function SettingsPage() {
           <CardHeader>
             <CardTitle className="text-lg">AI 测验配置</CardTitle>
             <CardDescription>
-              AI 测验功能需要配置 Claude API Key
+              AI 测验功能需要配置 DeepSeek API Key
             </CardDescription>
           </CardHeader>
           <CardContent>
             <p className="text-sm text-muted-foreground">
-              API Key 需在服务端环境变量中配置（CLAUDE_API_KEY），出于安全考虑不在前端显示。
+              API Key 需在服务端环境变量中配置（DEEPSEEK_API_KEY），出于安全考虑不在前端显示。
             </p>
             <p className="text-sm text-muted-foreground mt-2">
-              使用的模型：claude-sonnet-4-20250514
+              使用的模型：deepseek-chat
             </p>
           </CardContent>
         </Card>

@@ -4,6 +4,6 @@
   "env": {
     "DATABASE_URL": "@database-url",
     "NEXTAUTH_SECRET": "@nextauth-secret",
-    "CLAUDE_API_KEY": "@claude-api-key"
+    "DEEPSEEK_API_KEY": "@deepseek-api-key"
   }
 }
