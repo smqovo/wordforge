@@ -44,10 +44,11 @@ export async function POST(req: NextRequest) {
       { message: "注册成功", userId: user.id },
       { status: 201 }
     );
-  } catch (error) {
+  } catch (error: unknown) {
     console.error("Registration error:", error);
+    const message = error instanceof Error ? error.message : "Unknown error";
     return NextResponse.json(
-      { error: "注册失败，请稍后重试" },
+      { error: `注册失败: ${message}` },
       { status: 500 }
     );
   }
